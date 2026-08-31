@@ -51,7 +51,7 @@ Optional:
 OPENAI_API_KEY=your_key npm start
 ```
 
-Without an API key, OneHQ uses the built-in local Alpha brain. Opening `index.html` directly still works, but it runs in local UI fallback mode.
+You can also open the app, click `AI Engine`, and enter an OpenAI API key for that browser session. Without an API key, OneHQ uses the built-in local Alpha brain. Opening `index.html` directly still works, but it runs in local UI fallback mode.
 
 ## GitHub Roadmap
 
