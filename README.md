@@ -20,10 +20,12 @@ Command -> Observe -> Deliver -> Govern
 
 ## Current Alpha
 
-- Static browser app with local storage.
+- Local web app with a lightweight Node.js brain server.
 - Multiple companies under one Founder account.
 - Independent AI CEO, workforce, projects, brain, approvals and tools per company.
-- CEO Command creates projects automatically.
+- CEO Command creates projects, task contracts and reviewed deliverables.
+- AI staff can hold role-aware conversations.
+- AI staff can execute scoped tasks and produce work products.
 - Living Office reflects real task state.
 - Deliverables Center stores reviewed results.
 - Company Brain supports training company and employees.
@@ -31,9 +33,25 @@ Command -> Observe -> Deliver -> Govern
 
 ## Run
 
-Open `index.html` in a browser.
+For full AI staff brain mode:
 
-No server is required for the current Alpha.
+```bash
+npm start
+```
+
+Then open:
+
+```text
+http://localhost:4177
+```
+
+Optional:
+
+```bash
+OPENAI_API_KEY=your_key npm start
+```
+
+Without an API key, OneHQ uses the built-in local Alpha brain. Opening `index.html` directly still works, but it runs in local UI fallback mode.
 
 ## GitHub Roadmap
 
@@ -41,7 +59,7 @@ The next phase is to move from local prototype to a GitHub-backed product codeba
 
 - Add a real application framework.
 - Add database persistence and accounts.
-- Connect CEO Command to real AI orchestration.
+- Deepen CEO Command orchestration beyond the current local brain/OpenAI adapter.
 - Implement tool adapters for GitHub, Codex, OpenAI API, browser research and document generation.
 - Add audit logging for every tool call.
 - Add project deliverable storage and review workflow.
