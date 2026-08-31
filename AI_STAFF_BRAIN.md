@@ -19,12 +19,12 @@ If no `OPENAI_API_KEY` is configured, OneHQ uses a built-in local brain. It is d
 
 ### OpenAI Adapter
 
-If `OPENAI_API_KEY` is configured, the same endpoints call the OpenAI Responses API.
+If `OPENAI_API_KEY` is configured, or if the Founder enters an API key in the local AI Engine dialog, the same endpoints call the OpenAI Responses API.
 
 The current adapter uses:
 
 ```text
-ONEHQ_MODEL or gpt-4.1-mini
+ONEHQ_MODEL, the model entered in AI Engine, or gpt-4.1-mini
 ```
 
 ## Endpoints
