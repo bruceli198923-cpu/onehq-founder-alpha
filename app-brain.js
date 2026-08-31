@@ -25,6 +25,13 @@
       `);
     }
     const topActions = document.querySelector(".top-actions");
+    if (topActions && !document.getElementById("aiEngineBtn")) {
+      const button = document.createElement("button");
+      button.id = "aiEngineBtn";
+      button.className = "quiet-btn";
+      button.textContent = "AI Engine";
+      topActions.insertBefore(button, topActions.firstElementChild?.nextSibling || topActions.firstElementChild);
+    }
     if (topActions && !document.getElementById("brainMode")) {
       const chip = document.createElement("span");
       chip.id = "brainMode";
@@ -42,6 +49,22 @@
             <div class="command-actions">
               <button id="runStaffTaskBtn" class="quiet-btn">Execute Task</button>
               <button id="sendStaffMessageBtn" class="primary-btn">Send</button>
+            </div>
+          </form>
+        </dialog>
+      `);
+    }
+    if (!document.getElementById("aiEngineDialog")) {
+      document.body.insertAdjacentHTML("beforeend", `
+        <dialog id="aiEngineDialog">
+          <form method="dialog" class="dialog-card">
+            <h3>AI Engine</h3>
+            <input id="apiKeyInput" type="password" placeholder="OpenAI API Key">
+            <input id="modelInput" placeholder="Model, e.g. gpt-4.1-mini">
+            <p class="dialog-note">Key is stored only in this browser session for local testing. It is not written to GitHub or local files.</p>
+            <div class="command-actions">
+              <button id="clearEngineBtn" class="quiet-btn danger">Clear</button>
+              <button id="saveEngineBtn" class="primary-btn">Connect</button>
             </div>
           </form>
         </dialog>
@@ -73,6 +96,30 @@
     document.getElementById("runStaffTaskBtn")?.addEventListener("click", event => {
       event.preventDefault();
       sendStaffMessage(true);
+    });
+    document.getElementById("aiEngineBtn")?.addEventListener("click", () => {
+      const settings = engineSettings();
+      document.getElementById("apiKeyInput").value = settings.apiKey;
+      document.getElementById("modelInput").value = settings.model;
+      document.getElementById("aiEngineDialog").showModal();
+    });
+    document.getElementById("saveEngineBtn")?.addEventListener("click", event => {
+      event.preventDefault();
+      const apiKey = document.getElementById("apiKeyInput").value.trim();
+      const model = document.getElementById("modelInput").value.trim() || "gpt-4.1-mini";
+      if (apiKey) sessionStorage.setItem("onehq-openai-api-key", apiKey);
+      sessionStorage.setItem("onehq-openai-model", model);
+      brainMode = apiKey ? `openai:${model}` : "local-brain";
+      document.getElementById("aiEngineDialog").close();
+      renderBrainMode();
+    });
+    document.getElementById("clearEngineBtn")?.addEventListener("click", event => {
+      event.preventDefault();
+      sessionStorage.removeItem("onehq-openai-api-key");
+      sessionStorage.removeItem("onehq-openai-model");
+      brainMode = "local-brain";
+      document.getElementById("aiEngineDialog").close();
+      renderBrainMode();
     });
   }
 
@@ -168,9 +215,13 @@
   async function api(path, payload) {
     if (location.protocol === "file:") return null;
     try {
+      const settings = engineSettings();
+      const headers = { "Content-Type": "application/json" };
+      if (settings.apiKey) headers["x-onehq-openai-key"] = settings.apiKey;
+      if (settings.model) headers["x-onehq-model"] = settings.model;
       const response = await fetch(path, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify(payload)
       });
       if (!response.ok) return null;
@@ -187,9 +238,13 @@
       return;
     }
     try {
-      const response = await fetch("/api/health");
+      const settings = engineSettings();
+      const headers = {};
+      if (settings.apiKey) headers["x-onehq-openai-key"] = settings.apiKey;
+      if (settings.model) headers["x-onehq-model"] = settings.model;
+      const response = await fetch("/api/health", { headers });
       const data = await response.json();
-      brainMode = data.mode || "local-brain";
+      brainMode = settings.apiKey ? `openai:${settings.model}` : data.mode || "local-brain";
     } catch {
       brainMode = "local-ui";
     }
@@ -199,6 +254,13 @@
   function renderBrainMode() {
     const label = document.getElementById("brainMode");
     if (label) label.textContent = `Brain: ${brainMode}`;
+  }
+
+  function engineSettings() {
+    return {
+      apiKey: sessionStorage.getItem("onehq-openai-api-key") || "",
+      model: sessionStorage.getItem("onehq-openai-model") || "gpt-4.1-mini"
+    };
   }
 
   if (document.readyState === "loading") {
