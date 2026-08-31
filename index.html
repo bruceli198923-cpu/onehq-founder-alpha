@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OneHQ V1 - Founder Alpha</title>
+  <meta name="description" content="AI-native Company Operating System for founders.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">1</div>
+        <div>
+          <strong>OneHQ</strong>
+          <span>Founder Alpha</span>
+        </div>
+      </div>
+
+      <section class="portfolio">
+        <div class="section-label">Founder HQ</div>
+        <div id="companyList" class="company-list"></div>
+        <button id="newCompanyBtn" class="ghost-btn full">+ New Company</button>
+      </section>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-item active" data-view="command">CEO Command</button>
+        <button class="nav-item" data-view="dashboard">Dashboard</button>
+        <button class="nav-item" data-view="office">Living Office</button>
+        <button class="nav-item" data-view="tools">Tool Registry</button>
+        <button class="nav-item" data-view="deliverables">Deliverables</button>
+        <button class="nav-item" data-view="brain">Company Brain</button>
+        <button class="nav-item" data-view="governance">Governance</button>
+      </nav>
+
+      <div class="founder-card">
+        <span>Founder / Chairman</span>
+        <strong>Bruce</strong>
+        <p>最高权力：方向、资本、法律、最终控制权。</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow" id="companyType">AI Company Operating System</div>
+          <h1 id="companyName">OneHQ</h1>
+        </div>
+        <div class="top-actions">
+          <button id="trainCompanyBtn" class="quiet-btn">Train Company</button>
+          <button id="resetBtn" class="quiet-btn danger">Reset Alpha</button>
+        </div>
+      </header>
+
+      <section id="command" class="view active">
+        <div class="command-grid">
+          <div class="ceo-panel">
+            <div class="ceo-head">
+              <div class="avatar ceo">C</div>
+              <div>
+                <span>Company AI CEO</span>
+                <h2 id="ceoName">Mira Chen</h2>
+              </div>
+              <div class="status-pill">Active</div>
+            </div>
+            <div id="briefing" class="briefing"></div>
+            <div class="command-box">
+              <textarea id="commandInput" rows="5" placeholder="对这家公司的 AI CEO 下达自然语言目标。例如：研究一个面向独立创始人的 AI 公司操作系统，判断是否值得推进，并给我 PRD 和执行计划。"></textarea>
+              <div class="command-actions">
+                <label class="file-chip">
+                  <input id="attachmentInput" type="file" multiple>
+                  Attach files
+                </label>
+                <button id="sendCommandBtn" class="primary-btn">Send to CEO</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="results-panel">
+            <div class="panel-header">
+              <span>Executive Feed</span>
+              <button id="advanceWorkBtn" class="quiet-btn">Advance Work</button>
+            </div>
+            <div id="activityFeed" class="feed"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="view">
+        <div class="metric-grid" id="metrics"></div>
+        <div class="split">
+          <div class="panel">
+            <div class="panel-header"><span>Projects</span><button id="newProjectBtn" class="quiet-btn">CEO Draft</button></div>
+            <div id="projectList" class="project-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span>Risks & Approvals</span></div>
+            <div id="approvalList" class="approval-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="office" class="view">
+        <div class="panel-header office-toolbar"><span>AI Workforce</span><button id="hireEmployeeBtn" class="primary-btn">Hire AI Employee</button></div>
+        <div class="office-layout">
+          <div class="office-floor" id="officeFloor"></div>
+          <aside class="inspector" id="employeeInspector"></aside>
+        </div>
+      </section>
+
+      <section id="tools" class="view">
+        <div class="split">
+          <div class="panel">
+            <div class="panel-header"><span>Agent Tool Access</span><button id="addToolBtn" class="primary-btn">Add Tool</button></div>
+            <div id="toolList" class="tool-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span>Connection Policy</span></div>
+            <div class="protocol">
+              <article><strong>Staff can request tools</strong><p>AI staff may propose the tool they need, why they need it, and what authority it requires.</p></article>
+              <article><strong>CEO routes capability</strong><p>The AI CEO selects employees, tools and AI engines according to the task contract.</p></article>
+              <article><strong>Founder controls authority</strong><p>Money, legal, external publication and sensitive data access stay behind approval by default.</p></article>
+              <article><strong>Every tool call is auditable</strong><p>Each future integration should record employee, project, reason, input, output, cost and review status.</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="deliverables" class="view">
+        <div class="panel wide">
+          <div class="panel-header"><span>Result / Deliverables Center</span><button id="exportBtn" class="quiet-btn">Export Snapshot</button></div>
+          <div id="deliverableList" class="deliverable-list"></div>
+        </div>
+      </section>
+
+      <section id="brain" class="view">
+        <div class="brain-grid">
+          <div class="panel">
+            <div class="panel-header"><span>Training Console</span></div>
+            <textarea id="trainingInput" rows="6" placeholder="训练公司或员工：原则、案例、SOP、经验、Founder feedback..."></textarea>
+            <div class="training-row">
+              <select id="trainingTarget"></select>
+              <button id="saveTrainingBtn" class="primary-btn">Save Training</button>
+            </div>
+          </div>
+          <div id="brainColumns" class="brain-columns"></div>
+        </div>
+      </section>
+
+      <section id="governance" class="view">
+        <div class="split">
+          <div class="panel">
+            <div class="panel-header"><span>Authority Matrix</span></div>
+            <div id="authorityMatrix" class="matrix"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span>OneHQ Agent Protocol</span></div>
+            <div class="protocol">
+              <article><strong>Task Contract</strong><p>Goal, owner, context, success criteria, authority, expected deliverable.</p></article>
+              <article><strong>Handoff Contract</strong><p>From, to, reason, current state, artifacts, unresolved risks, next decision.</p></article>
+              <article><strong>Deliverable Contract</strong><p>Type, executive summary, source tasks, reviewer chain, decision requested.</p></article>
+              <article><strong>Review / QA</strong><p>Employee self-check, manager review, CEO review, rework loop before completion.</p></article>
+              <article><strong>Escalation</strong><p>Money, legal, authority conflict, low confidence, irreversible actions require Founder.</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="companyDialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Create Company</h3>
+      <input id="companyNameInput" placeholder="Company name">
+      <input id="companyPurposeInput" placeholder="Company mission">
+      <button id="createCompanySubmit" class="primary-btn">Create</button>
+    </form>
+  </dialog>
+
+  <dialog id="employeeDialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Hire AI Employee</h3>
+      <input id="employeeNameInput" placeholder="Name">
+      <input id="employeeRoleInput" placeholder="Position / Role">
+      <input id="employeeDeptInput" placeholder="Department">
+      <input id="employeeReportsInput" placeholder="Reports to">
+      <input id="employeeTaskInput" placeholder="Responsibilities / current objective">
+      <input id="employeeEngineInput" placeholder="AI engine / routing preference">
+      <input id="employeeAuthorityInput" placeholder="Authority">
+      <button id="createEmployeeSubmit" class="primary-btn">Hire</button>
+    </form>
+  </dialog>
+
+  <dialog id="toolDialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Add Agent Tool</h3>
+      <input id="toolNameInput" placeholder="Tool name, e.g. Codex, GitHub, Browser, OpenAI API">
+      <input id="toolPurposeInput" placeholder="What this tool lets staff do">
+      <input id="toolOwnerInput" placeholder="Default employee or department">
+      <select id="toolRiskInput">
+        <option value="low">Low risk</option>
+        <option value="medium">Medium risk</option>
+        <option value="high">High risk / Founder approval</option>
+      </select>
+      <button id="createToolSubmit" class="primary-btn">Add Tool</button>
+    </form>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>
